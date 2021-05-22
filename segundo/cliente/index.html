@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Gestión Vacunación</title>
+        <style>
+            .seccion{display:none;}
+            .activa{display:block;}
+        </style>
+    </head>
+    <body>
+
+        <script src="rest.js"></script>
+        <script src="rpc.js"></script>
+        <script src="main.js"></script>
+        <script src="servidor.js"></script>
+
+
+        <!--Soy MEDICO o PACIENTE-->
+        <div id = "medicoPaciente" class = "seccion activa">   
+            <button id="soyMedico" onclick="mostrar()">MEDICO</button>
+            <button id="soyPaciente" onclick="mostrar2()">PACIENTE</button>
+
+        </div>
+
+
+        <!--Soy MEDICO-->
+        <!--LOGIN-->
+        <div id="ventanaLogin" class="seccion">  
+            <h1>Iniciar sesión</h1>
+            <h2>LOGIN</h2>
+
+            <input id="usuari" type="text" placeholder="Ususario" value="" required>
+            <input id = "contraseñ" type="text" placeholder="Contraseña" value="" required>
+            <br>
+            <input value="Iniciar Sesion" onclick="iniciarSesion()" type="button"/>
+            <button onclick="volverMedicoPaciente()">Cerrar</button>
+
+        </div>
+
+        
+        <!--Soy PACIENTE-->
+        <!--LOGIN-->
+        <div id = "loginPaciente" class = "seccion">
+
+            <h4>Introduce tu codigo de acceso</h4>
+
+            <input id="accesoPac" type="text" placeholder="Codigo acceso" required>
+            
+            <button onclick="login()">Iniciar sesion</button> <!--CUIDADITO ESTOOOOOOO-->
+            <button onclick="volverMedicoPaciente()">Cerrar</button>
+
+        </div>
+
+
+        <!--LISTADO PACIENTES-->
+        <div id = "listadoPacientes" class = "seccion" >   
+            
+            <h2>Pacientes asignados</h2>
+
+           <!-- <ul id="pacientes"></ul>-->
+
+                
+            <table border = "1">
+                <thead>
+                    <th>Paciente</th>
+                    <th>Consultar</th>
+                    
+                </thead>
+                <tbody id="tablavariable"></tbody>
+            </table>
+            
+
+            <button id = "agregarPaciente" onclick = "nuevoPaciente()" > Agregar paciente </button>
+            <button id = "volver" onclick = "volverLogin()" > Volver </button>  <!--Volver al LOGIN-->
+            <button id = "dosisPendientes" onclick = "dosisPorPoner()" >Dosis pendientes</button>
+        </div>
+
+        
+        <!--Consultar DATOS ESE paciente que pinchas--> 
+        <div id = "datosPaciente" class = "seccion" >  
+            <h2>DATOS PACIENTE</h2>
+            
+            <table id="tablatabla" border = "1">
+                <tr>
+                    <th>ID:</th>
+                    <!--<td><input id="i" type="text" placeholder="ID" value=""></td>-->
+                </tr>
+                <tr>
+                    <th>Nombre</th> 
+                    <!--<td><input id="n" type="text" placeholder="Nombre" value=""></td> -->
+                </tr>
+
+                <tr>
+                    <th>Fecha nacimiento</th>
+                    <!--<td><input id="fn" type="date" placeholder="Fecha nacimiento" value=""></td>-->
+                </tr>
+
+                <tr>
+                    <th>Genero</th>
+                    <!--<td><input id="g" type="text" placeholder="genero" value=""></td>-->
+                </tr>
+
+                <tr>
+                    <th>Medico</th>
+                    <!--<td><input id="m" type="text" placeholder="Medico" value=""></td>-->
+                </tr>
+                <tr>
+                    <th>Observaciones</th>
+                  <!--  <td><input id="o" type="text" placeholder="Observaciones" value=""></td>-->
+                </tr>
+            </table>
+
+            <br>
+
+          
+            <h3>Dosis</h3>
+            <table border = "1">
+                <thead>
+                    <th>Fecha </th>
+                    <th>Número dosis</th> 
+                    <th>Vacuna</th> 
+                    <th>Vial</th>
+                    <th>Síntomas</th> <!--Boton para observar sintomas en otra seccion-->
+                    <!--El booleano de suministrada se verá en el botón de eliminar si ha sido suministrada no dejaraá ser eliminada-->
+                    <th>Suministrada</th>
+                    <th>Eliminar</th>
+                    
+                </thead>
+                <tbody id="tablavariabledosis"> </tbody>
+            </table>
+            <br>
+           
+            <h3>Añadir una nueva Dosis</h3> 
+            <div id = "nuevaDosis">
+                <label>Fecha: </label><input id="f" type="text" value=""></td>
+                <br>
+                <label>Número dosis: </label><input id="nd" type="text" value=""></td>
+                <br>
+                <label>Vacuna: </label><input id="v" type="text" value=""></td>
+                <br>
+                <label>Vial: </label><input id="vi" type="text" value=""></td>
+                <br>
+                <label>Suministrada: </label><input id="su" type="text" value=""></td>
+            </div>
+            
+
+            <button id = "añadirDosis" onclick = "consultarEsePaciente()">Agregar dosis</button> 
+            <button id = "volverListado" onclick = "actualizarPaciente()">Volver al listado</button> 
+    
+        </div>
+
+
+
+        <!--Añadir Nuevo paciente-->
+        <div id = "formularioPaciente" class = "seccion">
+            <h2>NUEVO PACIENTE</h2>
+            
+                <table id="tablaform" border = "1">
+                    <tr>
+                        <th>ID:</th>
+                        <td><input id="i" type="text" placeholder="ID" value=""></td>
+                    </tr>
+                    <tr>
+                        <th>Nombre</th> 
+                        <td><input id="n" type="text" placeholder="Nombre" value=""></td> 
+                    </tr>
+    
+                    <tr>
+                        <th>Fecha nacimiento</th>
+                        <td><input id="fn" type="date" placeholder="Fecha nacimiento" value=""></td>
+                    </tr>
+    
+                    <tr>
+                        <th>Genero</th>
+                        <td><input id="g" type="text" placeholder="genero" value=""></td>
+                    </tr>
+    
+                    <tr>
+                        <th>Medico</th>
+                        <td><input id="m" type="text" placeholder="Medico" value=""></td>
+                    </tr>
+                    <tr>
+                        <th>Codigo acceso</th>
+                        <td><input id="ca" type="text" placeholder="Codigo acceso" value=""></td>
+                    </tr>
+                    <tr>
+                        <th>Observaciones</th>
+                        <td><input id="o" type="text" placeholder="Observaciones" value=""></td>
+                    </tr>
+                </table>
+
+
+                <br>
+                <button id = "añadirPac" onclick = "actualizarPaciente()">Agregar dosis</button>
+
+               
+
+
+        <!--DOSIS PENDIENTES POR PONER HOY-->
+        <div id = "dPendiente" class = "seccion">
+
+
+
+
+
+
+
+
+        <div id = "listadoDosis" class = "seccion" >   
+            <h3>Lista de dosis</h3>
+
+
+
+
+        </div>
+
+
+    </div>      
+
+
+    </body>
+
+</html>

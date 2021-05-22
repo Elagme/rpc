@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf8">
+	<title>Ejemplo RPC</title>
+	<style>
+		body,
+		input,
+		button {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			font-size: 12px;
+		}
+	</style>
+	<script src="rest.js"></script>
+	<script src="rpc.js"></script>
+	<script src="main.js"></script>
+</head>
+
+<body>
+
+	<!--Soy PACIENTE-->
+	<!--LOGIN-->
+	<div id = "loginPaciente" class = "seccion activa">
+
+		<h4>Introduce tu codigo de acceso</h4>
+
+		<input id="accesoPac" type="text" placeholder="Codigo acceso" required>
+		
+		<button onclick="login()">Iniciar sesion</button> <!--CUIDADITO ESTOOOOOOO-->
+		<button onclick="volverMedicoPaciente()">Cerrar</button>
+
+	</div>
+
+	<div id = "listaDosis" class = "seccion" >
+		<h3>LISTADO DOSIS</h3>
+	
+	</div>
+  
+
+
+</body>
+
+</html>
